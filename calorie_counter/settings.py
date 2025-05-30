@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-b-yfidbeke@taa14+(vx+-dwyyosu5g5ayz5+vff)7ipey#m19'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -92,7 +92,7 @@ DATABASES = {
         # 'PASSWORD': '123456',             
         # 'HOST': 'localhost',                     
         # 'PORT': '5432', 
-         "default": dj_database_url.parse("add-the-external-database-link-provided")
+         "default": dj_database_url.parse("postgresql://calories_eryv_user:76EMyiBMdWy8PH9FEo1ytre8Y1h0IWlO@dpg-d0sa8jndiees73a728u0-a.oregon-postgres.render.com/calories_eryv")
                           
     }
 }
