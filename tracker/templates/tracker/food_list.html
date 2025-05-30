@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block content %}
+<div class="max-w-4xl mx-auto p-6">
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <h1 class="text-2xl font-bold mb-6">Your Food Items</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {% for food in foods %}
+      <div class="border p-4 rounded-lg">
+        <h3 class="font-bold">{{ food.name }}</h3>
+        <p>{{ food.calories }} calories</p>
+        <a
+          href="{% url 'log_food' %}?food_id={{ food.id }}"
+          class="text-blue-500 text-sm mt-2 inline-block"
+        >
+          Log This Food
+        </a>
+      </div>
+      {% empty %}
+      <p>
+        No food items yet.
+        <a href="{% url 'add_food' %}" class="text-blue-500"
+          >Add your first food</a
+        >
+      </p>
+      {% endfor %}
+    </div>
+
+    <div class="mt-6">
+      <a
+        href="{% url 'add_food' %}"
+        class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+      >
+        Add New Food
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
