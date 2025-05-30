@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -84,12 +86,14 @@ WSGI_APPLICATION = 'calorie_counter.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  
-        'NAME': 'calorie_tracker',                 
-        'USER': 'calorie_user',                  
-        'PASSWORD': '123456',             
-        'HOST': 'localhost',                     
-        'PORT': '5432',                           
+        # 'ENGINE': 'django.db.backends.postgresql',  
+        # 'NAME': 'calorie_tracker',                 
+        # 'USER': 'calorie_user',                  
+        # 'PASSWORD': '123456',             
+        # 'HOST': 'localhost',                     
+        # 'PORT': '5432', 
+         "default": dj_database_url.parse("add-the-external-database-link-provided")
+                          
     }
 }
 
