@@ -10,24 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+
 from pathlib import Path
+import os
 import dj_database_url
-
-import dj_database_url
-
-
-DATABASES = { 
-   # the link here is the external link provided on postgresql web service db 
-   "default": dj_database_url.parse("postgresql://calories_eryv_user:76EMyiBMdWy8PH9FEo1ytre8Y1h0IWlO@dpg-d0sa8jndiees73a728u0-a.oregon-postgres.render.com/calories_eryv") 
-}
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-b-yfidbeke@taa14+(vx+-dwyyosu5g5ayz5+vff)7ipey#m19'
@@ -39,23 +28,21 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'accounts',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'tracker',
-    
+    'accounts',
+    'tracker',
     'tailwind',
 ]
-AUTH_USER_MODEL = 'accounts.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Added for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -64,17 +51,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-LOGIN_REDIRECT_URL = 'dashboard'  # Where to redirect after login
-LOGIN_URL = 'login'               # Where to redirect for login
-
-
 ROOT_URLCONF = 'calorie_counter.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'DIRS': [BASE_DIR / 'templates'],  # Add this line
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,27 +70,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'calorie_counter.wsgi.application'
 
-
 # Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',  
-        'NAME': 'calorie_tracker',                 
-        'USER': 'calorie_user',                  
-        'PASSWORD': '123456',             
-        'HOST': 'localhost',                     
-        'PORT': '5432', 
-        #  "default": dj_database_url.parse("postgresql://calories_eryv_user:76EMyiBMdWy8PH9FEo1ytre8Y1h0IWlO@dpg-d0sa8jndiees73a728u0-a.oregon-postgres.render.com/calories_eryv")
-                          
-    }
+    'default': dj_database_url.config(
+        default='postgresql://calories_eryv_user:76EMyiBMdWy8PH9FEo1ytre8Y1h0IWlO@dpg-d0sa8jndiees73a728u0-a.oregon-postgres.render.com/calories_eryv',
+        conn_max_age=600
+    )
 }
 
+# Custom user model
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+# Login settings
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_URL = 'login'
 
 # Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -124,28 +101,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Required for collectstatic
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
