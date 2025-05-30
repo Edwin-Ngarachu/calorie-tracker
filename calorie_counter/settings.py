@@ -13,6 +13,14 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import dj_database_url
 
+import dj_database_url
+
+
+DATABASES = { 
+   # the link here is the external link provided on postgresql web service db 
+   "default": dj_database_url.parse("postgresql://calories_eryv_user:76EMyiBMdWy8PH9FEo1ytre8Y1h0IWlO@dpg-d0sa8jndiees73a728u0-a.oregon-postgres.render.com/calories_eryv") 
+}
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,13 +94,13 @@ WSGI_APPLICATION = 'calorie_counter.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql',  
-        # 'NAME': 'calorie_tracker',                 
-        # 'USER': 'calorie_user',                  
-        # 'PASSWORD': '123456',             
-        # 'HOST': 'localhost',                     
-        # 'PORT': '5432', 
-         "default": dj_database_url.parse("postgresql://calories_eryv_user:76EMyiBMdWy8PH9FEo1ytre8Y1h0IWlO@dpg-d0sa8jndiees73a728u0-a.oregon-postgres.render.com/calories_eryv")
+        'ENGINE': 'django.db.backends.postgresql',  
+        'NAME': 'calorie_tracker',                 
+        'USER': 'calorie_user',                  
+        'PASSWORD': '123456',             
+        'HOST': 'localhost',                     
+        'PORT': '5432', 
+        #  "default": dj_database_url.parse("postgresql://calories_eryv_user:76EMyiBMdWy8PH9FEo1ytre8Y1h0IWlO@dpg-d0sa8jndiees73a728u0-a.oregon-postgres.render.com/calories_eryv")
                           
     }
 }
